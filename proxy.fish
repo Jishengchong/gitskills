@@ -4,6 +4,7 @@ set hostip (cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }')
 set wslip (hostname -I | awk '{print $1}')
 set port 7890
 set PROXY_HTTP "http://$hostip:$port"
+set PROXY_SOCKS5 "socks5://$hostip:$port"
 
 function set_proxy
     set -gx http_proxy $PROXY_HTTP
@@ -12,8 +13,7 @@ function set_proxy
     set -gx HTTPS_PROXY $PROXY_HTTP
     set -gx all_proxy $PROXY_SOCKS5
     set -gx ALL_PROXY $PROXY_SOCKS5
-    git config --global http.https://github.com.proxy $PROXY_HTTP
-    git config --global https.https://github.com.proxy $PROXY_HTTP
+    git config --global http.proxy $PROXY_SOCKS5
     echo "Proxy has been opened."
 end
 
@@ -24,8 +24,7 @@ function unset_proxy
     set -e HTTPS_PROXY
     set -e all_proxy
     set -e ALL_PROXY
-    git config --global --unset http.https://github.com.proxy
-    git config --global --unset https.https://github.com.proxy
+    git config --global --unset http.proxy
     echo "Proxy has been closed."
 end
 

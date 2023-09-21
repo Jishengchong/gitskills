@@ -4,6 +4,7 @@ hostip=$(cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }')
 wslip=$(hostname -I | awk '{print $1}')
 port=7890
 PROXY_HTTP="http://${hostip}:${port}"
+PROXY_SOCKS5="socks5://${hostip}:${port}"
 
 set_proxy() {
 	export http_proxy="${PROXY_HTTP}"
@@ -12,8 +13,7 @@ set_proxy() {
 	export HTTPS_PROXY="${PROXY_HTTP}"
 	export all_proxy="${PROXY_SOCKS5}"
 	export ALL_PROXY="${PROXY_SOCKS5}"
-	git config --global http.https://github.com.proxy ${PROXY_HTTP}
-	git config --global https.https://github.com.proxy ${PROXY_HTTP}
+	git config --global http.proxy ${PROXY_SOCKS5}
 	echo "Proxy has been opened."
 }
 
@@ -24,8 +24,7 @@ unset_proxy() {
 	unset HTTPS_PROXY
 	unset all_proxy
 	unset ALL_PROXY
-	git config --global --unset http.https://github.com.proxy
-	git config --global --unset https.https://github.com.proxy
+	git config --global --unset http.proxy
 	echo "Proxy has been closed."
 }
 
