@@ -24,6 +24,7 @@ set incsearch
 
 " use Vim handlers in normal mode and IDE handlers in insert mode
 sethandler n:vim i:ide
+sethandler <c-p> n:ide i:ide
 
 set clipboard+=unnamed
 set ignorecase
@@ -42,6 +43,7 @@ set nu
 set idea-put
 set ideajoin
 set idearefactormode=keep
+set textobj-entire
 
 """ Map leader to space ---------------------
 let mapleader=" "
@@ -55,14 +57,18 @@ map <leader>r <Action>(RenameElement)
 map <leader>c <Action>(Stop)
 map <leader>z <Action>(ToggleDistractionFreeMode)
 map <leader>q <Action>(QuickJavaDoc)
-map <leader>ws <Action>(SelectInProjectView)
+map <leader>wt <Action>(SelectIn)
 map <leader>we <Action>(FileStructurePopup)
-map <leader>ww <Action>(SelectIn)
+map <leader>ww <Action>(SelectInProjectView)
 map <leader>wq <Action>(QuickJavaDoc)
+map <leader>wa <Action>(HideAllWindows)
 map <leader>va <Action>(Annotate)
 map <leader>vh <Action>(Vcs.ShowTabbedFileHistory)
+map <leader>vw <Action>(EditorSelectWord)
 map <leader>b <Action>(ToggleLineBreakpoint)
 "map <leader>o <Action>(FileStructurePopup)
+map <leader><Space> o<esc>
+map <leader>a <Action>($SelectAll)
 
 map <C-s> :w<CR>
 map <C-o> <Action>(Back)
@@ -93,7 +99,6 @@ set NERDTree
 set keep-english-in-normal
 set exchange
 set commentary
-Plug 'vim-airline/vim-airline'
 " IdeaVimExtension 输入法切换
 set keep-english-in-normal-and-restore-in-insert
 " which-key
@@ -101,7 +106,8 @@ set which-key
 
 """ Plugin settings -------------------------
 let g:argtextobj_pairs="[:],(:),<:>"
-map <leader>tt :NERDTreeToggle<CR>
+map <leader>tt :NERDTree<CR>
 map S <Plug>(easymotion-s)
 " map <leader>f <Plug>(easymotion-s)
 " map <leader>e <Plug>(easymotion-f)
+nnoremap U <Action>($Redo)
